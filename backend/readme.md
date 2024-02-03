@@ -11,3 +11,8 @@
     ```
     python3 -m virtualenv virtualenv_name   
     ```
+
+3. Activate virtual env
+    ```
+    python -m virtualenv <env_name>
+    ```
