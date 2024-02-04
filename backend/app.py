@@ -1,13 +1,15 @@
 from tkinter import N
-from flask import Flask
+from flask import Flask, jsonify
 from dotenv import load_dotenv
 from geopy.geocoders import GoogleV3
+from flask_cors import CORS
 from geopy.distance import geodesic
 import os
 #import openai
 import json
 import requests
 app=Flask(__name__)
+CORS(app)
 load_dotenv()
 geolocator = GoogleV3(api_key='AIzaSyDfCBbLpQ4gA5irk6up5IpvC2XNXOECoi4')
 
@@ -44,32 +46,13 @@ data = {
 
 response = requests.post(url, headers=headers, data=json.dumps(data))
 carbon_fp = response.json()['data']['attributes']['carbon_lb']
-print(carbon_fp)
 
-# carbon_url= 'https://www.carboninterface.com/api/v1/estimates'
-# carbon_headers ={ 'Authorization': 'Bearer kl1r8VkxPP2a6t3qw1cBQ',
-#           'Content-Type': 'application/json'}
+@app.route('/distance', methods=['GET'])
+def get_distance():
+    return jsonify({"distance": distance_str})
 
-# test_carbon_data={
-#       "type": "shipping",
-#       "weight_value": 200,
-#       "weight_unit": "kg",
-#       "distance_value": 20000,
-#       "distance_unit": "km",
-#       "transport_method": "truck"
-# }
-# carbon_response = requests.post(url=carbon_url, json=test_carbon_data, headers=carbon_headers)
-# print(carbon_response.json())
-@app.route('/shipping/<zipcode>')
-def func(zipcode):
-    return zipcode
-
-@app.route('/distance')
-def distance():
-    return distance_str
-
-@app.route('/carbon_emission')
-def carbon_weight():
-    return str(carbon_fp)
+@app.route('/carbon_emission',methods=['GET'])
+def get_carbon_weight():
+    return jsonify({"carbon": carbon_fp})
 
 app.run(debug=False)
