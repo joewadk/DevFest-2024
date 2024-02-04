@@ -5,14 +5,14 @@ from geopy.geocoders import GoogleV3
 from flask_cors import CORS
 from geopy.distance import geodesic
 import os
-#import openai
+# import openai
 import json
 import requests
-app=Flask(__name__)
+app = Flask(__name__)
 CORS(app)
 load_dotenv()
 
-#openai.api_key = os.getenv("GPT_KEY")
+# openai.api_key = os.getenv("GPT_KEY")
 GOOGLE_CLOUD_API = os.getenv('GOOGLE_CLOUD_API')
 geolocator = GoogleV3(api_key=GOOGLE_CLOUD_API)
 
@@ -24,20 +24,18 @@ headers = {
     'Content-Type': 'application/json',
 }
 
+
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
 
+
 @app.route('/carbon_emission', methods=['POST'])
 def get_carbon_weight():
-
-    print(21)
-    request_data = request.json
-    print(request_data)
+    request_data = request.get_json()
     startDest = geolocator.geocode(request_data['user_address'])
     endDest = geolocator.geocode(request_data['source_address'])
     weightItem = request_data['package_weight']
-    print(2)
 
     startCoords = (startDest.latitude, startDest.longitude)
     endCoords = (endDest.latitude, endDest.longitude)
@@ -52,15 +50,8 @@ def get_carbon_weight():
         "distance_unit": "mi",
         "transport_method": "truck"
     }
-    print(3)
     response = requests.post(url, headers=headers, data=json.dumps(data))
-    print(response)
     carbon_fp = response.json()['data']['attributes']['carbon_lb']
-    print(carbon_fp)
-    # return jsonify({"carbon": carbon_fp})
-
-    # return str(carbon_fp)
-    carbon_lb = 50
-    return str(carbon_lb)
+    return jsonify({"carbon": carbon_fp})
 
 app.run(debug=True)
