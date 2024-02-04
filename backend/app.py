@@ -4,8 +4,7 @@ from dotenv import load_dotenv
 from geopy.geocoders import GoogleV3
 from geopy.distance import geodesic
 import os
-from datetime import datetime
-app = Flask(__name__)
+#import openai
 import json
 import requests
 
@@ -13,7 +12,7 @@ load_dotenv()
 # geolocator = GoogleV3(api_key='AIzaSyDfCBbLpQ4gA5irk6up5IpvC2XNXOECoi4')
 # location = geolocator.geocode(user_input)
 
-openai.api_key = os.getenv("GPT_KEY")
+#openai.api_key = os.getenv("GPT_KEY")
 GOOGLE_CLOUD_API = os.getenv('GOOGLE_CLOUD_API')
 geolocator = GoogleV3(api_key=GOOGLE_CLOUD_API)
 
