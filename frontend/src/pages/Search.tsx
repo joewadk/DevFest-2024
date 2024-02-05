@@ -26,7 +26,17 @@ export default function Search() {
 
   async function handleOnSubmit() {
     setIsLoading(true);
-    setCarbonFootprint(15);
+
+    const requestUrl = "http://127.0.0.1:5000/carbon_emission";
+    const requestInit = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(carbonForm),
+    };
+    const response = await fetch(requestUrl, requestInit);
+    const responseData = await response.json();
+    setCarbonFootprint(responseData.carbon);
+
     setIsLoading(false);
   }
 
@@ -120,7 +130,7 @@ export default function Search() {
                     </InputGroup>
                   </FormControl>
 
-                  <Stack  >
+                  <Stack>
                     <Stack
                       direction={{ base: "column", sm: "row" }}
                       align={"start"}
