@@ -11,9 +11,8 @@ import requests
 app=Flask(__name__)
 CORS(app)
 load_dotenv()
-geolocator = GoogleV3(api_key='AIzaSyDfCBbLpQ4gA5irk6up5IpvC2XNXOECoi4')
+geolocator = GoogleV3(api_key=<Google-API>))
 
-#openai.api_key = os.getenv("GPT_KEY")
 GOOGLE_CLOUD_API = os.getenv('GOOGLE_CLOUD_API')
 geolocator = GoogleV3(api_key=GOOGLE_CLOUD_API)
 
