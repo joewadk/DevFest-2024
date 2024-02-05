@@ -9,7 +9,7 @@ import json
 import requests
 app=Flask(__name__)
 load_dotenv()
-geolocator = GoogleV3(api_key='AIzaSyDfCBbLpQ4gA5irk6up5IpvC2XNXOECoi4')
+geolocator = GoogleV3(api_key='<google-api>')
 
 #openai.api_key = os.getenv("GPT_KEY")
 GOOGLE_CLOUD_API = os.getenv('GOOGLE_CLOUD_API')
@@ -47,7 +47,7 @@ carbon_fp = response.json()['data']['attributes']['carbon_lb']
 print(carbon_fp)
 
 # carbon_url= 'https://www.carboninterface.com/api/v1/estimates'
-# carbon_headers ={ 'Authorization': 'Bearer kl1r8VkxPP2a6t3qw1cBQ',
+# carbon_headers ={ 'Authorization': 'Bearer <carbon api key>',
 #           'Content-Type': 'application/json'}
 
 # test_carbon_data={
